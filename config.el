@@ -21,7 +21,7 @@
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-(setq doom-font (font-spec :family "Fira Code"))
+(setq doom-font (font-spec :family "Fira Code" :size (when IS-LINUX 26)))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -29,8 +29,11 @@
 
 
 ;; emacs-mac
-(setq doom-theme (if (equal (plist-get (mac-application-state) :appearance)
-                            "NSAppearanceNameDarkAqua")
+(setq doom-theme (if (if IS-MAC
+                         (equal (plist-get (mac-application-state) :appearance)
+                                "NSAppearanceNameDarkAqua")
+                       (let ((hour (decoded-time-hour (decode-time (current-time)))))
+                         (or (< hour 6) (> hour 18))))
                      'doom-vibrant
                    'doom-one-light))
 
