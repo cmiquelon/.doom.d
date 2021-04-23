@@ -77,24 +77,13 @@
 ;; auto-format
 (delete 'emacs-lisp-mode +format-on-save-enabled-modes)
 
-;; alert
-(use-package alert
-  :config
-  (setq alert-default-style 'osx-notifier))
-
 ;; org
 (require 'org-habit)
 
-(map! :leader
+(map! :leader :desc "Grab Mac link" "nL" #'org-mac-grab-link)
 
-      :desc "Grab Mac link" "nL" #'org-mac-grab-link
+(setq org-preview-latex-default-process 'dvisvgm)
 
-      :prefix ("T" . "timer")
-      :desc "set" "s" #'org-timer-set-timer
-      :desc "stop" "k" #'org-timer-stop
-      :desc "pause/continue" "p" #'org-timer-pause-or-continue)
-
-(setq org-show-notification-handler 'alert)
 
 ;; auto-mode
 (dolist (extension-mode '(("\\.rain\\'" . web-mode)))
@@ -102,6 +91,6 @@
 
 ;; css
 (setq css-indent-offset 2)
-
+;;
 ;; smart-semicolon
 (add-hook 'js-mode-hook #'smart-semicolon-mode)
